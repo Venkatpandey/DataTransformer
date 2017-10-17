@@ -55,19 +55,18 @@
 
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == false) {
-                $this->processData($post, $uploadOk);
+                $status = $this->processData($post, $uploadOk);
                 // if everything is ok, try to upload file
             } else {
                 // get it locally for processing
                 if (move_uploaded_file($file['upload']['tmp_name'], $this->sourceFilename)) {
                     $status = $this->processData($post, $uploadOk);
                 } else {
-                    $this->processData($post, $uploadOk);
+                    $status = $this->processData($post, $uploadOk);
                 }
             }
-            $this->result = $status;
 
-            return $uploadOk;
+            return $status;
         }
 
         /**
@@ -130,8 +129,8 @@
          * @param $file
          */
         function __construct($post, $file) {
-            $this->transformAction($post, $file);
-            $this->result;
+            $status = $this->transformAction($post, $file);
+            $this->result = $status;
         }
 
     }

@@ -265,7 +265,6 @@
             return $array;
         }
 
-
         /**
          * Alternative to json_encode() to handle big arrays
          * Regular json_encode would return NULL due to memory issues.
