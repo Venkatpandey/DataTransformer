@@ -5,7 +5,10 @@
      * Time: 19:15
      */
 
-    namespace MakeResultClass;
+    namespace DataTransformer\MakeResultClass;
+    use MakeResultClass\ToXML;
+    header('Content-type: text/plain');
+    //include_once ('ToXML.php');
 
     /**
      * Class MakeResult
@@ -49,6 +52,12 @@
             }
 
             return $status;
+        }
+
+        private function CallToXML($Array, $Resfilename)
+        {
+
+            $this->ToXML($Array, $Resfilename);
         }
 
         public function __construct($Array, $Format)
