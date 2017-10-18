@@ -7,7 +7,7 @@
 
     namespace DataTransform\MultiSort;
     header('Content-type: text/plain');
-    include_once ('MasterValidator.php');
+    include_once('MasterValidator.php');
 
     class MultiSort
     {
