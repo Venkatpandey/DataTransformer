@@ -8,7 +8,7 @@
     namespace DataTransform;
     use DataTransform\CSVParserWriter;
     header('Content-type: text/plain');
-    include_once('CSVParserWriter.php');
+    include_once('DataTransformerCore/CSVParserWriter.php');
     error_reporting(E_ERROR | E_PARSE);
 
     /**

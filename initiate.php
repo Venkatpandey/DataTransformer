@@ -14,7 +14,6 @@
     $sbool = $bool->result;
 
     // delete temp files
-    //array_map('unlink', glob("uploadAndResults/*"));
-    //array_map('unlink', glob("*.zip"));
+    array_map('unlink', glob("uploadAndResults/*"));
 
     header("Location: index.php?action=".$sbool);

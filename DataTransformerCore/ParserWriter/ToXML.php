@@ -11,6 +11,11 @@
     header('Content-type: text/plain');
     include_once ('MakeResult.php');
 
+    /**
+     * Class ToXML
+     *
+     * @package MakeResultClass\ToXML
+     */
     class ToXML
     {
         /**

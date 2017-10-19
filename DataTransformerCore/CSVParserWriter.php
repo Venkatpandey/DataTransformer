@@ -11,6 +11,7 @@
     use DataTransformer\MakeResultClass\MakeResultClass;
     header('Content-type: text/plain');
     include_once('MultiSort.php');
+    include_once ('ParserWriter/MakeResult.php');
 
     error_reporting(E_ERROR | E_PARSE);
 
