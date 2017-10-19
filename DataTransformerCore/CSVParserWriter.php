@@ -6,10 +6,9 @@
      */
 
     namespace DataTransform\CSVParserWriter;
-    use DataTransform\DataTransformer;
     use DataTransform\MultiSort;
     use DataTransform\MasterValidator;
-    use \ZipArchive;
+    use DataTransformer\MakeResultClass\MakeResultClass;
     header('Content-type: text/plain');
     include_once('MultiSort.php');
 
@@ -93,10 +92,13 @@
         /**
          * @param $Array
          * @param $Format
+         * @return mixed
          */
         private function makeResultFile($Array, $Format)
         {
+            $ResultData = new MakeResultClass($Array, $Format);
 
+            return $ResultData->getResultStatus();
         }
 
         /**

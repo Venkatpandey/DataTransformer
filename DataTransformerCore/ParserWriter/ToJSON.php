@@ -1,18 +1,63 @@
 <?php
     /**
-     * Created by PhpStorm.
      * User: venpan
      * Date: 18/10/2017
      * Time: 19:46
      */
 
-    namespace DataTransformer\ToJSON;
-    use MakeResultClass;
+    namespace MakeResultClass\ToJSON;
+    use DataTransform\DataTransformer;
     header('Content-type: text/plain');
+    include_once ('MakeResult.php');
 
-
+    /**
+     * Class ToJSON
+     *
+     * @package MakeResultClass\ToJSON
+     */
     class ToJSON
     {
+        /**
+         * @var
+         */
+        private $FileLocation;
+
+        /**
+         * @var
+         */
+        private $JsonResult;
+
+        /**
+         * @return mixed
+         */
+        public function getFileLocation()
+        {
+            return $this->FileLocation;
+        }
+
+        /**
+         * @param mixed $FileLocation
+         */
+        public function setFileLocation($FileLocation)
+        {
+            $this->FileLocation = $FileLocation;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getJsonResult()
+        {
+            return $this->JsonResult;
+        }
+
+        /**
+         * @param mixed $JsonResult
+         */
+        public function setJsonResult($JsonResult)
+        {
+            $this->JsonResult = $JsonResult;
+        }
 
         /**
          * helper function to make XML data file
@@ -27,8 +72,8 @@
             // special case for json, we need to make sure to aviod any non utf-8 char encoding
             $utfEncodedArray = $this->encodeToUtf8($Array);
             $jsonData = $this->jsonEncode($utfEncodedArray);
-            // need some validation here to check if file actially got written before returning true
-            $jsonfile = file_put_contents(DataTransformer::LOCAL_DIR . $Resfilename . DataTransformer::JSON_FORMAT, $jsonData);
+            $this->setFileLocation(DataTransformer::LOCAL_DIR . $Resfilename . DataTransformer::JSON_FORMAT);
+            $jsonfile = file_put_contents($this->getFileLocation(), $jsonData);
 
             return $jsonfile;
         }
@@ -108,7 +153,15 @@
             return $str;
         }
 
-        public function __construct()
+        /**
+         * ToJSON constructor.
+         *
+         * @param $Array
+         * @param $Resfilename
+         */
+        public function __construct($Array, $Resfilename)
         {
+            $Status = $this->ToJSON ($Array, $Resfilename);
+            $this->setJsonResult($Status);
         }
     }

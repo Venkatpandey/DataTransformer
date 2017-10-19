@@ -1,17 +1,60 @@
 <?php
     /**
-     * Created by PhpStorm.
      * User: venpan
      * Date: 18/10/2017
      * Time: 19:45
      */
 
-    namespace MakeResultClass;
-    header('Content-type: text/plain');
+    namespace MakeResultClass\ToXML;
+    use DataTransform\DataTransformer;
 
+    header('Content-type: text/plain');
+    include_once ('MakeResult.php');
 
     class ToXML
     {
+        /**
+         * @var
+         */
+        private $FileLocation;
+
+        /**
+         * @var
+         */
+        private $XMLRes;
+
+        /**
+         * @return mixed
+         */
+        public function getFileLocation()
+        {
+            return $this->FileLocation;
+        }
+
+        /**
+         * @param mixed $FileLocation
+         */
+        public function setFileLocation($FileLocation)
+        {
+            $this->FileLocation = $FileLocation;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getXMLRes()
+        {
+            return $this->XMLRes;
+        }
+
+        /**
+         * @param mixed $XMLRes
+         */
+        public function setXMLRes($XMLRes)
+        {
+            $this->XMLRes = $XMLRes;
+        }
+
         /**
          * helper function to make XML data file
          * outputs in DataTransformer::TARGET_DIR
@@ -24,7 +67,8 @@
         {
             $xmlData = new \SimpleXMLElement("<?xml version=\"1.0\"?><hotel_data></hotel_data>");
             $this->arrayToXML($Array, $xmlData);
-            $status = $xmlData->asXML(DataTransformer::LOCAL_DIR . $Resfilename . DataTransformer::XML_FORMAT) ? true : false;
+            $this->setFileLocation(DataTransformer::LOCAL_DIR . $Resfilename . DataTransformer::XML_FORMAT);
+            $status = $xmlData->asXML($this->getFileLocation()) ? true : false;
 
             return $status;
         }
@@ -61,6 +105,7 @@
          */
         public function __construct($Array, $Resfilename)
         {
-            $this->ToXML($Array, $Resfilename);
+            $Status = $this->ToXML($Array, $Resfilename);
+            $this->setXMLRes($Status);
         }
     }

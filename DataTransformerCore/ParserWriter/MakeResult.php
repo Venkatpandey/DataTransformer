@@ -6,17 +6,43 @@
      */
 
     namespace DataTransformer\MakeResultClass;
-    use MakeResultClass\ToXML;
+    use DataTransform\DataTransformer;
+    use MakeResultClass\ToJSON\ToJSON;
+    use MakeResultClass\ToXML\ToXML;
+    use MakeResultClass\Delivery\Delivery;
     header('Content-type: text/plain');
-    //include_once ('ToXML.php');
+    include_once ('ToXML.php');
+    include_once ('ToJSON.php');
+    include_once ('Delivery.php');
 
     /**
      * Class MakeResult
      *
      * @package MakeResultClass
      */
-    class MakeResult
+    class MakeResultClass
     {
+        /**
+         * @var
+         */
+        private $ResultStatus;
+
+        /**
+         * @return mixed
+         */
+        public function getResultStatus()
+        {
+            return $this->ResultStatus;
+        }
+
+        /**
+         * @param mixed $ResultStatus
+         */
+        public function setResultStatus($ResultStatus)
+        {
+            $this->ResultStatus = $ResultStatus;
+        }
+
         /**
          * Helper function to make result file for output
          *
@@ -26,27 +52,30 @@
          */
         private function makeResultFile($Array, $Format)
         {
+            // initiate the delivery class
+            $Delivery = new Delivery();
             $status = false;
+            // result file name
             $Resfilename = $_SESSION['basename'] . "_resultData.";
             switch ($Format) {
                 case DataTransformer::XML_FORMAT:
-                    $ifFile = $this->ToXML($Array, $Resfilename);
-                    if($ifFile) {
-                        $status = $this->DownloadToClient(DataTransformer::LOCAL_DIR . $Resfilename . DataTransformer::XML_FORMAT, true);}
+                    $Xml = $this->CallToXML($Array, $Resfilename);
+                    if($Xml != null) {
+                        $status = $Delivery->Download($Xml->getFileLocation(), true);}
                     break;
 
                 case DataTransformer::JSON_FORMAT:
-                    $ifFile = $this->ToJSON($Array, $Resfilename);
-                    if($ifFile) {
-                        $status = $this->DownloadToClient(DataTransformer::LOCAL_DIR . $Resfilename . DataTransformer::JSON_FORMAT, true);}
+                    $Json = $this->CallToJSON($Array, $Resfilename);
+                    if($Json != null) {
+                        $status = $Delivery->Download($Json->getFileLocation(), true);}
                     break;
 
                 case DataTransformer::JSON_XML_FORMAT:
-                    $fileX = $this->ToXML($Array, $Resfilename);
-                    $fileJ = $this->ToJSON($Array, $Resfilename);
-                    if($fileX && $fileJ){
+                    $Xml = $this->CallToXML($Array, $Resfilename);
+                    $Json = $this->CallToJSON($Array, $Resfilename);
+                    if($Xml != null && $Json != null){
                         // special treatment for multiple files :)
-                        $status = $this->DownloadToClient(false, false);
+                        $status = $Delivery->Download(false, false);
                     }
                     break;
             }
@@ -54,14 +83,41 @@
             return $status;
         }
 
+        /**
+         * @param $Array
+         * @param $Resfilename
+         * @return \MakeResultClass\ToXML\ToXML
+         */
         private function CallToXML($Array, $Resfilename)
         {
+            // xml class initiation
+            $Xml = new ToXML($Array, $Resfilename);
 
-            $this->ToXML($Array, $Resfilename);
+            return $Xml;
         }
 
+        /**
+         * @param $Array
+         * @param $Resfilename
+         * @return \MakeResultClass\ToJSON\ToJSON
+         */
+        private function CallToJSON($Array, $Resfilename)
+        {
+            // json class initiation
+            $Json = new ToJSON($Array, $Resfilename);
+
+            return $Json;
+        }
+
+        /**
+         * MakeResultClass constructor.
+         *
+         * @param $Array
+         * @param $Format
+         */
         public function __construct($Array, $Format)
         {
-            $this->makeResultFile($Array, $Format);
+            $Status = $this->makeResultFile($Array, $Format);
+            $this->setResultStatus($Status);
         }
     }

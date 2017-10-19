@@ -1,24 +1,28 @@
 <?php
     /**
-     * Created by PhpStorm.
      * User: venpan
      * Date: 18/10/2017
      * Time: 19:48
      */
 
-    namespace DataTransform\CSVParserWriter\Delivery;
+    namespace MakeResultClass\Delivery;
+    use DataTransform\DataTransformer;
+    use \ZipArchive;
     header('Content-type: text/plain');
 
-
+    /**
+     * Class Delivery
+     *
+     * @package MakeResultClass\Delivery
+     */
     class Delivery
     {
-
         /**
          * @param $filePath
          * @param $fileOnly
          * @return bool
          */
-        private function DownloadToClient($filePath, $fileOnly)
+        public function Download($filePath, $fileOnly)
         {
             // simple header accumalation to stream download to client
             if ($fileOnly && file_exists($filePath)) {
@@ -51,15 +55,19 @@
                 header("Location: $zipPackageName");
 
                 return readfile($zipPackageName) ? true : false;
-            } else{
+            } else {
 
                 // file didnt created, return false for now.
                 return false;
             }
         }
 
+        /**
+         * Delivery constructor.
+         */
         public function __construct()
         {
+            // class constructor
         }
 
     }

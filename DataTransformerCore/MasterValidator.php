@@ -36,7 +36,6 @@
          * Setter function for Validated Array
          *
          * @param mixed $validatedArray
-         * @return array
          */
         public function setValidatedArray(array $validatedArray)
         {
