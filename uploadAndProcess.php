@@ -9,10 +9,12 @@
     use DataTransform\CSVParserWriter;
     header('Content-type: text/plain');
     include_once('DataTransformerCore/CSVParserWriter.php');
-    error_reporting(E_ERROR | E_PARSE);
+    //error_reporting(E_ERROR | E_PARSE);
 
     /**
      * Class DataTransformer
+     *
+     * @package DataTransform
      */
     class DataTransformer {
 

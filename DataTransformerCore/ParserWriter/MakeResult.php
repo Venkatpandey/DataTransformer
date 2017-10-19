@@ -17,6 +17,7 @@
 
     /**
      * Class MakeResult
+     * Responsible for making final result data for delivery
      *
      * @package MakeResultClass
      */

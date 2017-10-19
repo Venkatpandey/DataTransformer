@@ -12,6 +12,7 @@
 
     /**
      * Class Delivery
+     * Responsible to deliver final result data to user as a dounload
      *
      * @package MakeResultClass\Delivery
      */
