@@ -106,7 +106,8 @@
          * @param $arr
          * @return string
          */
-        private function jsonEncode($arr) {
+        private function jsonEncode($arr)
+        {
             $str = '{';
             $count = count($arr);
             $current = 0;

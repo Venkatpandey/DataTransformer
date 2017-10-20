@@ -56,7 +56,8 @@
          * @param $sortType
          * @return bool
          */
-        private function sortArray ($myArray, $sortType) {
+        private function sortArray ($myArray, $sortType)
+        {
             $sortOrder = (int) $sortType[0]; // sort order
             $sortThis = (string) $sortType[1]; // sort column
 
@@ -80,7 +81,8 @@
          * @param $ArrayData
          * @param $postSort
          */
-        function __construct($ArrayData, $postSort) {
+        function __construct($ArrayData, $postSort)
+        {
             $sorterType = explode(', ', $postSort["sort"]);
             $sortedArray = $this->sortArray($ArrayData, $sorterType);
             $this->setSortedArrayData($sortedArray);

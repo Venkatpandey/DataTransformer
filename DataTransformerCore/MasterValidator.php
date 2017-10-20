@@ -75,7 +75,8 @@
          * @param $array
          * @return array
          */
-        private function validateForAscii($array) : array {
+        private function validateForAscii($array) : array
+        {
             foreach ($array as $aHotels => $aHotel) {
                 if(false == mb_detect_encoding($aHotel['name'], 'ASCII', true)) {
                     unset($array[$aHotels]);
@@ -92,7 +93,8 @@
          * @param $array
          * @return array
          */
-        private function validateForUrl($array) : array {
+        private function validateForUrl($array) : array
+        {
             foreach ($array as $aHotels => $aHotel) {
                 // Remove all illegal characters from a url
                 $cleanUrl = filter_var($aHotel['uri'], FILTER_SANITIZE_URL);
@@ -113,7 +115,8 @@
          * @param $array
          * @return array
          */
-        private function validateForNonNegative($array) : array {
+        private function validateForNonNegative($array) : array
+        {
             foreach ($array as $aHotels => $aHotel) {
                 $intStar = (int) $aHotel['stars'];
                 $stars = filter_var($intStar, FILTER_VALIDATE_INT, array('options' => array(

@@ -16,7 +16,8 @@
      *
      * @package DataTransform
      */
-    class DataTransformer {
+    class DataTransformer
+    {
 
         /** some constants to be used during process */
 
@@ -130,7 +131,8 @@
          * @param $post
          * @param $file
          */
-        function __construct($post, $file) {
+        function __construct($post, $file)
+        {
             $status = $this->transformAction($post, $file);
             $this->result = $status;
         }
