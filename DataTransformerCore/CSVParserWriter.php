@@ -83,10 +83,10 @@
         {
             //proceed with validation now if user requests
             if (isset($Post['validation']) && 1 == $Post['validation']) {
-                $ValidatedData = new MasterValidator\MasterValidator($ArrayData);
-                $ValidatedArray = $ValidatedData->getValidatedArray();
-                $this->sortThisArray($ValidatedArray, $Post);
+                // validate and sort
+                $this->ValidateThisArray($ArrayData, $Post);
             } else {
+                // just sort
                 $this->sortThisArray($ArrayData, $Post);
             }
             // all requirements met, now we can proceed to prepare files
@@ -102,9 +102,22 @@
          */
         private function makeResultFile($Array, $Format)
         {
+            // initiate make result and deliver process
             $ResultData = new MakeResultClass($Array, $Format);
 
             return $ResultData->getResultStatus();
+        }
+
+        /**
+         * @param $ArrayData
+         * @param $Post
+         */
+        private function ValidateThisArray($ArrayData, $Post)
+        {
+            // initiate validate class, validate and proceed with sorting
+            $ValidatedData = new MasterValidator\MasterValidator($ArrayData);
+            $ValidatedArray = $ValidatedData->getValidatedArray();
+            $this->sortThisArray($ValidatedArray, $Post);
         }
 
         /**
@@ -113,7 +126,8 @@
          * @param $ArrayToSort
          * @param $Post
          */
-        private function sortThisArray ($ArrayToSort, $Post) {
+        private function sortThisArray ($ArrayToSort, $Post)
+        {
             $SortedData = new MultiSort\MultiSort($ArrayToSort, $Post);
             $SortedArray = $SortedData->getSortedArrayData();
             $this->setFinalArrayData($SortedArray);
@@ -126,7 +140,8 @@
          * @param $arrayData
          * @param $post
          */
-        function __construct($arrayData, $post) {
+        function __construct($arrayData, $post)
+        {
             $Status = $this->ParserWriterAction($arrayData, $post);
             $this->setResult($Status);
         }
